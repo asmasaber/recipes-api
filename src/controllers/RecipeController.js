@@ -3,7 +3,8 @@ const { Recipe } = require('../models')
 module.exports = {
   async create (req, res) {
     try {
-      req.body.avatar = req.file.path
+      console.log('enter create recipe')
+      req.body.avatar = req.file.location
       req.body.userId = req.user.id
       const recipe = await Recipe.create(req.body)
       const recipeJson = recipe.toJSON()
@@ -83,13 +84,15 @@ module.exports = {
   },
   async update (req, res) {
     try {
+      console.log('update reciiiiiiiiiiiiiiiiiiiiiiiiiiipe')
+      console.log(req.file)
       if (req.file) {
-        req.body.avatar = req.file.path
+        req.body.avatar = req.file.location
       }
       console.log('before update')
       console.log('before update >>>> id = ' + req.params.id)
       req.body.userId = req.user.id
-      const recipe = await Recipe.update({
+      const effectedRows = await Recipe.update({
         title: req.body.title,
         description: req.body.description,
         persons: req.body.persons,
@@ -103,11 +106,21 @@ module.exports = {
           id: req.params.id
         }
       })
-      const recipeJson = recipe.toJSON()
-      res.send({
-        recipe: recipeJson
-      })
+      console.log('================================= recipe ')
+      if (effectedRows > 0) {
+        const recipe = await Recipe.findOne({
+          where: {
+            id: req.params.id
+          }
+        })
+        const recipeJson = recipe.toJSON()
+        res.send({
+          recipe: recipeJson
+        })
+      }
     } catch (err) {
+      console.log('===========================================')
+      console.log(err)
       res.status(400).send({
         error: 'error on update this recipe'
       })

@@ -1,4 +1,4 @@
-const config = require('../config/config.js')
+// const config = require('../config/config.js')
 
 module.exports = (sequelize, DataTypes) => {
   const Recipe = sequelize.define('Recipe', {
@@ -6,17 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     persons: DataTypes.INTEGER,
     timeNeeded: DataTypes.INTEGER,
     description: DataTypes.STRING,
-    avatar: {
-      type: DataTypes.STRING,
-      get: function () {
-        return config.host.concat(':', config.port).concat('/', this.getDataValue('avatar').replace('\',\'/'))
-      },
-      set: function (val) {
-        const nv = val.replace(config.host.concat(':', config.port).concat('/'), '')
-        console.log('new value >>>>>>>>>>> ' + nv)
-        return this.setDataValue('avatar', nv)
-      }
-    },
+    avatar: DataTypes.STRING,
     category: DataTypes.STRING,
     ingredients: {
       type: DataTypes.STRING,

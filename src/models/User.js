@@ -1,4 +1,4 @@
-const config = require('../config/config.js')
+// const config = require('../config/config.js')
 const Promise = require('bluebird')
 const bcrypt = Promise.promisifyAll(require('bcrypt-nodejs'))
 
@@ -26,17 +26,18 @@ module.exports = (sequelize, DataTypes) => {
     },
     password: DataTypes.STRING,
     bio: DataTypes.STRING,
-    avatar: {
-      type: DataTypes.STRING,
-      get: function () {
-        if (this.getDataValue('avatar')) {
-          return config.host.concat(':', config.port).concat('/', this.getDataValue('avatar').replace('\',\'/'))
-        }
-      },
-      set: function (val) {
-        return this.setDataValue('avatar', val.replace(config.host.concat(':', config.port).concat('/'), ''))
-      }
-    }
+    avatar: DataTypes.STRING
+    // avatar: {
+    //   type: DataTypes.STRING,
+    //   get: function () {
+    //     if (this.getDataValue('avatar')) {
+    //       return config.host.concat(':', config.port).concat('/', this.getDataValue('avatar').replace('\',\'/'))
+    //     }
+    //   },
+    //   set: function (val) {
+    //     return this.setDataValue('avatar', val.replace(config.host.concat(':', config.port).concat('/'), ''))
+    //   }
+    // }
   },
   {
     hooks: {
