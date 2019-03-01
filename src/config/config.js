@@ -1,5 +1,5 @@
 module.exports = {
-  port: process.env.PORT || 8088,
+  port: process.env.PORT || 8087,
   host: 'https://foodrecipesapp.herokuapp.com',
   db: {
     database: process.env.DB_NAME || 'recipes',

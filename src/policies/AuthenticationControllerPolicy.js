@@ -3,6 +3,7 @@ const Joi = require('joi')
 
 module.exports = {
   register (req, res, next) {
+    console.log(req.body)
     const schema = {
       fname: Joi.string().max(10).required(),
       lname: Joi.string().max(10).required(),

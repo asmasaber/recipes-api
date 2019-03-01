@@ -14,6 +14,7 @@ function jwtSignUser (user) {
 module.exports = {
   async register (req, res) {
     try {
+      console.log(req.body)
       if (req.file) {
         req.body.avatar = req.file.location
       }
@@ -30,6 +31,7 @@ module.exports = {
     }
   },
   async login (req, res) {
+    console.log('enter login ========================= ')
     try {
       const { email, password } = req.body
       const user = await User.findOne({
@@ -42,7 +44,9 @@ module.exports = {
           error: 'The login information was incorrect'
         })
       }
+      console.log('before check password')
       const isPasswordValid = await user.comparePassword(password)
+      console.log('after check password')
       if (!isPasswordValid) {
         res.status(403).send({
           error: 'The login information was incorrect'
